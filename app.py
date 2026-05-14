@@ -161,9 +161,40 @@ def create_results(answers):
     return pd.DataFrame(results)
 
 
+def create_profile_summary(df):
+    highest_dimension = df.sort_values("Yüzde Puanı", ascending=False).iloc[0]
+    lowest_dimension = df.sort_values("Yüzde Puanı", ascending=True).iloc[0]
+
+    high_count = int((df["Düzey"] == "Yüksek").sum())
+    medium_count = int((df["Düzey"] == "Orta").sum())
+    low_count = int((df["Düzey"] == "Düşük").sum())
+
+    high_dimensions = df[df["Düzey"] == "Yüksek"]["Alt Boyut"].tolist()
+    medium_dimensions = df[df["Düzey"] == "Orta"]["Alt Boyut"].tolist()
+    low_dimensions = df[df["Düzey"] == "Düşük"]["Alt Boyut"].tolist()
+
+    return {
+        "highest_dimension": highest_dimension,
+        "lowest_dimension": lowest_dimension,
+        "high_count": high_count,
+        "medium_count": medium_count,
+        "low_count": low_count,
+        "high_dimensions": high_dimensions,
+        "medium_dimensions": medium_dimensions,
+        "low_dimensions": low_dimensions
+    }
+
+
+def format_dimension_list(items):
+    if not items:
+        return "Yok"
+    return ", ".join(items)
+
+
 def create_html_report(name, surname, df):
     full_name = f"{name} {surname}".strip()
     date_str = datetime.now().strftime("%d.%m.%Y %H:%M")
+    profile = create_profile_summary(df)
 
     rows = ""
     for _, row in df.iterrows():
@@ -219,6 +250,12 @@ def create_html_report(name, surname, df):
                 border-radius: 8px;
                 margin-top: 20px;
             }}
+            .summary-box {{
+                background-color: #eef8f4;
+                padding: 15px;
+                border-radius: 8px;
+                margin-top: 20px;
+            }}
             .note {{
                 margin-top: 30px;
                 padding: 15px;
@@ -247,6 +284,29 @@ def create_html_report(name, surname, df):
             Alt boyutlarda madde sayıları farklı olduğu için puanlar yüzdelik değere dönüştürülmüştür.
             Yüzde puanları 0–33 arası düşük, 34–66 arası orta, 67–100 arası yüksek düzey olarak yorumlanmıştır.
         </p>
+
+        <p>
+            Bu değerlendirmede toplam puan hesaplanmamaktadır. Çünkü ölçek farklı mizaç ve karakter
+            boyutlarını ayrı ayrı değerlendirmektedir. Bu nedenle sonuçlar toplam skor üzerinden değil,
+            alt boyut profili üzerinden yorumlanmalıdır.
+        </p>
+
+        <h2>Profil Özeti</h2>
+        <div class="summary-box">
+            <p><strong>En belirgin boyut:</strong> {html.escape(str(profile["highest_dimension"]["Alt Boyut"]))} 
+            (%{profile["highest_dimension"]["Yüzde Puanı"]})</p>
+
+            <p><strong>En düşük boyut:</strong> {html.escape(str(profile["lowest_dimension"]["Alt Boyut"]))} 
+            (%{profile["lowest_dimension"]["Yüzde Puanı"]})</p>
+
+            <p><strong>Yüksek düzeydeki boyut sayısı:</strong> {profile["high_count"]}</p>
+            <p><strong>Orta düzeydeki boyut sayısı:</strong> {profile["medium_count"]}</p>
+            <p><strong>Düşük düzeydeki boyut sayısı:</strong> {profile["low_count"]}</p>
+
+            <p><strong>Yüksek düzeyde çıkan boyutlar:</strong> {html.escape(format_dimension_list(profile["high_dimensions"]))}</p>
+            <p><strong>Orta düzeyde çıkan boyutlar:</strong> {html.escape(format_dimension_list(profile["medium_dimensions"]))}</p>
+            <p><strong>Düşük düzeyde çıkan boyutlar:</strong> {html.escape(format_dimension_list(profile["low_dimensions"]))}</p>
+        </div>
 
         <h2>Sonuçlar</h2>
         <table>
@@ -279,6 +339,7 @@ def create_html_report(name, surname, df):
 def create_text_report(name, surname, df):
     full_name = f"{name} {surname}".strip()
     date_str = datetime.now().strftime("%d.%m.%Y %H:%M")
+    profile = create_profile_summary(df)
 
     report = f"""
 MİZAÇ VE KARAKTER ÖZELLİKLERİ DEĞERLENDİRME RAPORU
@@ -293,6 +354,22 @@ Her madde arka planda ait olduğu alt boyuta göre puanlanmıştır.
 Her alt boyuta ait maddeler toplanarak ham puan elde edilmiştir.
 Madde sayıları farklı olduğu için ham puanlar yüzdelik puana dönüştürülmüştür.
 0–33 düşük, 34–66 orta, 67–100 yüksek düzey olarak yorumlanmıştır.
+
+Bu değerlendirmede toplam puan hesaplanmamaktadır. Çünkü ölçek farklı mizaç ve karakter
+boyutlarını ayrı ayrı değerlendirmektedir. Bu nedenle sonuçlar toplam skor üzerinden değil,
+alt boyut profili üzerinden yorumlanmalıdır.
+
+PROFİL ÖZETİ
+En belirgin boyut: {profile["highest_dimension"]["Alt Boyut"]} (%{profile["highest_dimension"]["Yüzde Puanı"]})
+En düşük boyut: {profile["lowest_dimension"]["Alt Boyut"]} (%{profile["lowest_dimension"]["Yüzde Puanı"]})
+
+Yüksek düzeydeki boyut sayısı: {profile["high_count"]}
+Orta düzeydeki boyut sayısı: {profile["medium_count"]}
+Düşük düzeydeki boyut sayısı: {profile["low_count"]}
+
+Yüksek düzeyde çıkan boyutlar: {format_dimension_list(profile["high_dimensions"])}
+Orta düzeyde çıkan boyutlar: {format_dimension_list(profile["medium_dimensions"])}
+Düşük düzeyde çıkan boyutlar: {format_dimension_list(profile["low_dimensions"])}
 
 SONUÇLAR
 """
@@ -338,7 +415,8 @@ with st.expander("ℹ️ Puanlama hakkında bilgi"):
     - Sonuçlar yüzde puana dönüştürülür.
     - **0–33:** Düşük  
     - **34–66:** Orta  
-    - **67–100:** Yüksek  
+    - **67–100:** Yüksek
+    - Toplam puan hesaplanmaz; sonuçlar alt boyut profili üzerinden değerlendirilir.
     """)
 
 st.divider()
@@ -407,34 +485,47 @@ if submitted:
         }
 
         result_df = create_results(numeric_answers)
+        profile = create_profile_summary(result_df)
 
         st.success("Değerlendirme başarıyla tamamlandı.")
 
         full_name = f"{name.strip()} {surname.strip()}"
         st.subheader(f"📌 {full_name} için Değerlendirme Sonuçları")
 
-        average_score = round(result_df["Yüzde Puanı"].mean(), 2)
-        highest_dimension = result_df.sort_values("Yüzde Puanı", ascending=False).iloc[0]
-        lowest_dimension = result_df.sort_values("Yüzde Puanı", ascending=True).iloc[0]
+        st.info(
+            "Bu değerlendirmede toplam puan hesaplanmamaktadır. "
+            "Çünkü ölçek farklı mizaç ve karakter boyutlarını ayrı ayrı değerlendirmektedir. "
+            "Bu nedenle sonuçlar toplam skor üzerinden değil, alt boyut profili üzerinden yorumlanmalıdır."
+        )
 
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.metric("Ortalama Yüzde Puanı", f"%{average_score}")
+            st.metric(
+                "En Belirgin Boyut",
+                profile["highest_dimension"]["Alt Boyut"],
+                f"%{profile['highest_dimension']['Yüzde Puanı']}"
+            )
 
         with col2:
             st.metric(
-                "En Yüksek Boyut",
-                highest_dimension["Alt Boyut"],
-                f"%{highest_dimension['Yüzde Puanı']}"
+                "En Düşük Boyut",
+                profile["lowest_dimension"]["Alt Boyut"],
+                f"%{profile['lowest_dimension']['Yüzde Puanı']}"
             )
 
         with col3:
             st.metric(
-                "En Düşük Boyut",
-                lowest_dimension["Alt Boyut"],
-                f"%{lowest_dimension['Yüzde Puanı']}"
+                "Profil Dağılımı",
+                f"{profile['high_count']} yüksek",
+                f"{profile['medium_count']} orta, {profile['low_count']} düşük"
             )
+
+        st.markdown("### Profil Özeti")
+
+        st.write(f"**Yüksek düzeyde çıkan boyutlar:** {format_dimension_list(profile['high_dimensions'])}")
+        st.write(f"**Orta düzeyde çıkan boyutlar:** {format_dimension_list(profile['medium_dimensions'])}")
+        st.write(f"**Düşük düzeyde çıkan boyutlar:** {format_dimension_list(profile['low_dimensions'])}")
 
         st.divider()
 
