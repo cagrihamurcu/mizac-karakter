@@ -16,8 +16,6 @@ st.set_page_config(
 
 # -------------------------------------------------
 # Ölçek maddeleri
-# Katılımcıya alt boyut başlıkları gösterilmez.
-# Alt boyut bilgisi yalnızca puanlama için arka planda kullanılır.
 # -------------------------------------------------
 SCALE_ITEMS = [
     {"dimension": "Yenilik Arayışı", "item": "Keşfetmekten heyecan duyarım."},
@@ -61,39 +59,11 @@ SCALE_ITEMS = [
 
 
 # -------------------------------------------------
-# Sabit karışık sıra
-# Bu sıra tüm katılımcılarda aynı olur.
-# Başlık etkisini azaltır, araştırma standardizasyonunu korur.
+# Sabit karışık soru sırası
 # -------------------------------------------------
 FIXED_SHUFFLED_ORDER = [
-    5,   # Belirsizlikten korkarım.
-    16,  # Amaçlarımı kendim belirlerim.
-    0,   # Keşfetmekten heyecan duyarım.
-    23,  # Acıma duygum vardır.
-    11,  # Mükemmeliyetçiyim.
-    8,   # Duygusal olduğumu düşünürüm.
-    20,  # Başkalarını olduğu gibi kabullenirim.
-    2,   # Savurganım.
-    26,  # Çevremdeki insanları bir parçam olarak görürüm.
-    14,  # Sebat ederim.
-    4,   # Endişeli ve karamsar olduğumu düşünürüm.
-    18,  # Kendimi olduğum gibi kabullenirim.
-    9,   # Kolay bağlanırım.
-    21,  # Empati kurarım.
-    1,   # Hızlı karar veririm.
-    12,  # Amacıma ulaşmak için sınırları zorlarım.
-    7,   # Çabuk yorulurum.
-    24,  # Temiz kalpli ve vicdanlıyım.
-    19,  # Değişikliklere kolay adapte olurum.
-    10,  # Başka insanlara bağımlı bir yapım vardır.
-    3,   # Düzensiz olduğumu düşünürüm.
-    15,  # Sorumluluk alırım.
-    6,   # Yabancılardan çekinirim.
-    22,  # Yardım severim.
-    25,  # Yaptığım işe kendimi kaptırırım.
-    13,  # Kolay vazgeçmem.
-    17,  # Becerikli olduğumu düşünürüm.
-    27   # Hayatta manevi bir gücün yarattığı mükemmel bir düzen olduğuna inanırım.
+    5, 16, 0, 23, 11, 8, 20, 2, 26, 14, 4, 18, 9, 21,
+    1, 12, 7, 24, 19, 10, 3, 15, 6, 22, 25, 13, 17, 27
 ]
 
 
@@ -108,6 +78,9 @@ DIMENSION_ORDER = [
 ]
 
 
+# -------------------------------------------------
+# Düzeye göre kısa yorumlar
+# -------------------------------------------------
 DIMENSION_DESCRIPTIONS = {
     "Yenilik Arayışı": {
         "Düşük": "Yenilik arayışı düşük düzeydedir. Katılımcı daha temkinli, düzenli ve alışılmış yöntemleri tercih eden bir yapı gösterebilir.",
@@ -143,6 +116,147 @@ DIMENSION_DESCRIPTIONS = {
         "Düşük": "Kendi kendini aşma düşük düzeydedir. Katılımcı daha somut, gerçekçi ve bireysel sınırları belirgin bir anlam dünyasına sahip olabilir.",
         "Orta": "Kendi kendini aşma orta düzeydedir. Katılımcı zaman zaman manevi, bütüncül veya anlam odaklı düşünceler geliştirebilir.",
         "Yüksek": "Kendi kendini aşma yüksek düzeydedir. Katılımcı yaptığı işe kendini kaptırabilen, çevresiyle bütünlük hissedebilen ve manevi anlam arayışı güçlü bir yapı gösterebilir."
+    }
+}
+
+
+# -------------------------------------------------
+# Geniş değerlendirme içerikleri
+# -------------------------------------------------
+DIMENSION_DETAILS = {
+    "Yenilik Arayışı": {
+        "tanım": (
+            "Yenilik Arayışı, yeni uyaranlara ve yeni deneyimlere yönelme eğilimidir. "
+            "Kişinin keşfetmeye, araştırmaya ve denemeye açık olmasını ifade eder. "
+            "Ödül ihtimali ortaya çıktığında hareketlenme ve heyecan artabilir."
+        ),
+        "davranışsal_görünüm": (
+            "Karar alma sürecinde hızlı ve dürtüsel davranma eğilimi görülebilir. "
+            "Yeni ve farklı olana karşı merak yüksektir. Engellenme durumunda sabırsızlık "
+            "veya hızlı tepki ortaya çıkabilir."
+        ),
+        "güçlü_taraflar": ["Keşif", "Hız", "Değişim enerjisi"],
+        "riskler": ["Dürtüsellik", "Dağınıklık", "Erken karar"],
+        "liderlik_yorumu": (
+            "Yenilik arayışı yüksek yöneticiler değişim başlatabilir. Ancak ekip hazır değilse "
+            "bu enerji karmaşaya da dönüşebilir. Bu boyut ölçekte keşfetmekten heyecan duyma, "
+            "hızlı karar verme, savurganlık ve düzensizlikle ilişkilendirilir."
+        )
+    },
+    "Zarardan Kaçınma": {
+        "tanım": (
+            "Zarardan Kaçınma, riskli ve tehlikeli durumlara karşı temkinli olma eğilimidir. "
+            "Kişi risk ve tehdit karşısında kaçınma veya geri çekilme davranışı gösterebilir. "
+            "Belirsizlik bu kişiler için daha zorlayıcı olabilir."
+        ),
+        "davranışsal_görünüm": (
+            "Yeni, bilinmeyen ve öngörülemeyen durumlara karşı çekingenlik görülebilir. "
+            "Endişelilik ve karamsarlık daha belirgin olabilir. Riskten korunma ihtiyacı "
+            "davranışı yönlendirebilir. Çabuk yorulma ve pasif kaçınma eğilimi görülebilir."
+        ),
+        "güçlü_taraflar": ["Risk fark etme", "Dikkat", "Temkin"],
+        "riskler": ["Karar gecikmesi", "Aşırı güvence arama", "Değişime direnç"],
+        "liderlik_yorumu": (
+            "Bu boyut özellikle operasyon, güvenlik, kalite ve regülasyon gibi alanlarda değerlidir. "
+            "Ancak aşırı olduğunda belirsizliğe toleransı azaltabilir. Ölçekte endişe, belirsizlik "
+            "korkusu ve çekinme davranışı ile görünür."
+        )
+    },
+    "Ödül Bağımlılığı": {
+        "tanım": (
+            "Ödül Bağımlılığı, duygusal ve sosyal bağ kurma eğilimini ifade eder. "
+            "Kişi ilişkilerde yakınlık, kabul ve onay arayabilir. Başkalarının düşünce "
+            "ve değerlendirmeleri daha etkili olabilir."
+        ),
+        "davranışsal_görünüm": (
+            "Sosyal bağları sürdürme isteği yüksektir. Duygusal tepkiler ve ilişkisel hassasiyet "
+            "daha belirgin olabilir. İnsanlarla bağ kurmaya ve bağlı kalmaya yatkınlık görülebilir."
+        ),
+        "güçlü_taraflar": ["İlişki kurma", "Aidiyet yaratma", "Duyarlılık"],
+        "riskler": ["Onay arama", "Zor konuşmadan kaçınma", "Netlik kaybı"],
+        "liderlik_yorumu": (
+            "İlişki odaklı liderler ekipte bağlılık ve güven oluşturabilir. Ancak ilişkiyi koruma "
+            "isteği bazen zor kararları ve net geri bildirimleri geciktirebilir."
+        )
+    },
+    "Sebat Etme": {
+        "tanım": (
+            "Sebat Etme, zorlanma ve engellenme karşısında devam etme eğilimidir. "
+            "Kişinin hedefe ulaşmak için ısrarcı ve kararlı davranmasını ifade eder. "
+            "Yorgunluk ve engeller karşısında dayanıklılık gösterebilir."
+        ),
+        "davranışsal_görünüm": (
+            "Sonuca ulaşma isteği güçlüdür. Kolay vazgeçmeme eğilimi öne çıkar. "
+            "Bu boyutta kararlılık ve direnç belirgindir."
+        ),
+        "güçlü_taraflar": ["Kararlılık", "Dayanıklılık", "Hedefe odaklanma"],
+        "riskler": ["Mükemmeliyetçilik", "Esneklik kaybı", "Tükenmişlik üretme"],
+        "liderlik_yorumu": (
+            "Sebat etme düzeyi yüksek olan yöneticiler işleri sonuçlandırma ve hedefe ulaşma konusunda güçlüdür. "
+            "Ancak bu yüksek standart ve ısrar, ekip tarafından zaman zaman sürekli performans baskısı olarak algılanabilir. "
+            "Ölçekte mükemmeliyetçilik, sınırları zorlama ve vazgeçmeme boyutları yer alır."
+        )
+    },
+    "Kendi Kendini Yönetme": {
+        "tanım": (
+            "Kendi Kendini Yönetme, bireyin kendi seçim ve davranışlarının sorumluluğunu almasıyla ilgilidir. "
+            "Amaçlarının farkında olma ve hedeflerini belirleme eğilimini içerir. "
+            "Sorunlar karşısında etkin çözüm üretme becerisi öne çıkar."
+        ),
+        "davranışsal_görünüm": (
+            "Sorumluluk duygusu ve görev bilinci yüksektir. Kişinin kendine güvenmesi ve kendini kabul etmesi "
+            "bu boyutta önemlidir. Değişen koşullara uyum sağlama becerisi görülebilir."
+        ),
+        "güçlü_taraflar": ["Sorumluluk", "Hedef koyma", "Öz disiplin", "Uyum"],
+        "riskler": ["Aşırı kontrol", "Yardım istememe", "Delege edememe", "Kendine aşırı yüklenme", "Esneklik kaybı"],
+        "liderlik_yorumu": (
+            "Liderliğin merkezi boyutlarından biridir. Kendi duygu, davranış ve önceliklerini yöneten kişi, "
+            "ekibini de daha sağlıklı yönetebilir. Ölçekte sorumluluk alma, amaç belirleme, beceriklilik, "
+            "kendini kabul ve değişime uyum yer alır."
+        )
+    },
+    "İşbirliği Yapma": {
+        "tanım": (
+            "İşbirliği Yapma, başkalarıyla uyumlu ve yapıcı ilişki kurma eğilimidir. "
+            "Kişinin başkalarını olduğu gibi kabul etmesi bu boyutta önemlidir. "
+            "Hoşgörü ve empati kurma becerisi öne çıkar."
+        ),
+        "davranışsal_görünüm": (
+            "Başkalarının duygularına karşı duyarlılık görülebilir. Yardımseverlik ve yararlı olma isteği belirgindir. "
+            "Sevecen, vicdanlı ve sosyal kabule yatkın bir yapı görülebilir."
+        ),
+        "güçlü_taraflar": ["Empati", "Yardımseverlik", "Başkalarını kabul", "Güven yaratma"],
+        "riskler": [
+            "Sınır koymakta zorlanma",
+            "Aşırı tolerans",
+            "Zor konuşmaları erteleme",
+            "Düşük performansa geç müdahale",
+            "Herkesi memnun etmeye çalışma",
+            "Çatışmadan kaçınma",
+            "Netlik kaybı"
+        ],
+        "liderlik_yorumu": (
+            "İşbirliği yapan lider ekipte güvenli iklim oluşturabilir. Ancak fazla tolerans performans yönetimini "
+            "zorlaştırabilir. Ölçekte empati, yardımseverlik, vicdanlılık ve başkalarını kabul etme vurgulanır."
+        )
+    },
+    "Kendi Kendini Aşma": {
+        "tanım": (
+            "Kendi Kendini Aşma, kişinin kendisini daha büyük bir anlam ve bütünün parçası olarak görmesiyle ilgilidir. "
+            "İdealist ve yaratıcı bir yönü ifade eder. Bencillikten uzak, daha kapsayıcı bir bakış açısı içerebilir."
+        ),
+        "davranışsal_görünüm": (
+            "İnanç, değerler ve manevi duygular bu boyutta etkili olabilir. Kişi yaptığı işe kendini derin biçimde verebilir. "
+            "Çevresindeki insanları ve yaşamı daha bütünsel bir bakışla değerlendirebilir. Daha büyük bir düzen ve anlam "
+            "duygusuna yönelim görülebilir."
+        ),
+        "güçlü_taraflar": ["Anlam duygusu", "Bütünsel bakış", "İlham", "Amaç odaklılık"],
+        "riskler": ["Aşırı idealizm", "Soyut kalma", "Detayı kaçırma", "Gerçekçi olmayan iyimserlik", "Sınırların bulanıklaşması"],
+        "liderlik_yorumu": (
+            "Bu boyut liderin yalnızca ne yapıldığını değil, neden yapıldığını da görünür kılmasına yardımcı olabilir. "
+            "Ancak sadece ilham yeterli değildir; operasyonel yön de gerekir. Ölçekte işe kendini kaptırma, çevresindekileri "
+            "kendinin parçası olarak görme ve daha büyük bir düzene inanma yer alır."
+        )
     }
 }
 
@@ -219,6 +333,14 @@ def format_dimension_list(items):
     return ", ".join(items)
 
 
+def format_list_html(items):
+    return "".join(f"<li>{html.escape(item)}</li>" for item in items)
+
+
+def format_list_text(items):
+    return ", ".join(items) if items else "Yok"
+
+
 def safe_file_name(text):
     cleaned = text.strip().replace(" ", "_")
     cleaned = "".join(char for char in cleaned if char.isalnum() or char in ["_", "-"])
@@ -230,8 +352,15 @@ def create_html_report(participant_code, name, surname, df):
     date_str = datetime.now().strftime("%d.%m.%Y %H:%M")
     profile = create_profile_summary(df)
 
+    participant_name_html = html.escape(full_name) if full_name else "Belirtilmedi"
+
     rows = ""
+    detail_sections = ""
+
     for _, row in df.iterrows():
+        dimension = row["Alt Boyut"]
+        detail = DIMENSION_DETAILS[dimension]
+
         rows += f"""
         <tr>
             <td>{html.escape(str(row['Alt Boyut']))}</td>
@@ -242,7 +371,31 @@ def create_html_report(participant_code, name, surname, df):
         </tr>
         """
 
-    participant_name_html = html.escape(full_name) if full_name else "Belirtilmedi"
+        detail_sections += f"""
+        <div class="dimension-card">
+            <h3>{html.escape(dimension)} — {html.escape(str(row['Düzey']))} düzey</h3>
+            <p><strong>Puan:</strong> {row['Ham Puan']} / {row['Maksimum Puan']} | 
+            <strong>Yüzde Puanı:</strong> %{row['Yüzde Puanı']}</p>
+
+            <h4>Tanım</h4>
+            <p>{html.escape(detail['tanım'])}</p>
+
+            <h4>Davranışsal Görünüm</h4>
+            <p>{html.escape(detail['davranışsal_görünüm'])}</p>
+
+            <h4>Katılımcı Yorumu</h4>
+            <p>{html.escape(row['Yorum'])}</p>
+
+            <h4>Güçlü Taraflar</h4>
+            <ul>{format_list_html(detail['güçlü_taraflar'])}</ul>
+
+            <h4>Dikkat Edilmesi Gereken Riskler</h4>
+            <ul>{format_list_html(detail['riskler'])}</ul>
+
+            <h4>Liderlik / Çalışma Yaşamı Açısından Değerlendirme</h4>
+            <p>{html.escape(detail['liderlik_yorumu'])}</p>
+        </div>
+        """
 
     report = f"""
     <!DOCTYPE html>
@@ -265,6 +418,14 @@ def create_html_report(participant_code, name, surname, df):
             h2 {{
                 color: #334e68;
                 margin-top: 30px;
+            }}
+            h3 {{
+                color: #243b53;
+                margin-bottom: 5px;
+            }}
+            h4 {{
+                color: #334e68;
+                margin-bottom: 4px;
             }}
             table {{
                 width: 100%;
@@ -291,6 +452,13 @@ def create_html_report(participant_code, name, surname, df):
                 padding: 15px;
                 border-radius: 8px;
                 margin-top: 20px;
+            }}
+            .dimension-card {{
+                border: 1px solid #d9e2ec;
+                border-radius: 10px;
+                padding: 16px;
+                margin-top: 18px;
+                background-color: #ffffff;
             }}
             .note {{
                 margin-top: 30px;
@@ -345,7 +513,7 @@ def create_html_report(participant_code, name, surname, df):
             <p><strong>Düşük düzeyde çıkan boyutlar:</strong> {html.escape(format_dimension_list(profile["low_dimensions"]))}</p>
         </div>
 
-        <h2>Sonuçlar</h2>
+        <h2>Sonuç Tablosu</h2>
         <table>
             <thead>
                 <tr>
@@ -353,13 +521,16 @@ def create_html_report(participant_code, name, surname, df):
                     <th>Puan</th>
                     <th>Yüzde</th>
                     <th>Düzey</th>
-                    <th>Yorum</th>
+                    <th>Kısa Yorum</th>
                 </tr>
             </thead>
             <tbody>
                 {rows}
             </tbody>
         </table>
+
+        <h2>Ayrıntılı Alt Boyut Değerlendirmeleri</h2>
+        {detail_sections}
 
         <div class="note">
             <strong>Not:</strong> Bu kısa form klinik tanı koymak amacıyla kullanılmamalıdır.
@@ -416,12 +587,34 @@ SONUÇLAR
 """
 
     for _, row in df.iterrows():
+        dimension = row["Alt Boyut"]
+        detail = DIMENSION_DETAILS[dimension]
+
         report += f"""
-{row['Alt Boyut']}
+------------------------------------------------------------
+{dimension} — {row['Düzey']} düzey
+------------------------------------------------------------
+
 Puan: {row['Ham Puan']} / {row['Maksimum Puan']}
 Yüzde Puanı: %{row['Yüzde Puanı']}
-Düzey: {row['Düzey']}
-Yorum: {row['Yorum']}
+
+Tanım:
+{detail['tanım']}
+
+Davranışsal Görünüm:
+{detail['davranışsal_görünüm']}
+
+Katılımcı Yorumu:
+{row['Yorum']}
+
+Güçlü Taraflar:
+{format_list_text(detail['güçlü_taraflar'])}
+
+Dikkat Edilmesi Gereken Riskler:
+{format_list_text(detail['riskler'])}
+
+Liderlik / Çalışma Yaşamı Açısından Değerlendirme:
+{detail['liderlik_yorumu']}
 """
 
     report += """
@@ -477,7 +670,6 @@ st.info(
 consent = st.checkbox(
     "Bilgilendirme metnini okudum, anladım ve bu değerlendirmeye katılmayı kabul ediyorum."
 )
-
 
 if not consent:
     st.warning("Forma devam edebilmek için bilgilendirme ve onam kutusunu işaretlemeniz gerekmektedir.")
@@ -627,13 +819,39 @@ if submitted:
         chart_df = result_df.set_index("Alt Boyut")["Yüzde Puanı"]
         st.bar_chart(chart_df)
 
-        st.markdown("### Alt Boyut Yorumları")
+        st.markdown("### Ayrıntılı Alt Boyut Değerlendirmeleri")
 
         for _, row in result_df.iterrows():
-            with st.expander(f"{row['Alt Boyut']} — {row['Düzey']} düzey"):
+            dimension = row["Alt Boyut"]
+            detail = DIMENSION_DETAILS[dimension]
+
+            with st.expander(f"{dimension} — {row['Düzey']} düzey"):
                 st.write(f"**Puan:** {row['Ham Puan']} / {row['Maksimum Puan']}")
                 st.write(f"**Yüzde Puanı:** %{row['Yüzde Puanı']}")
-                st.write(f"**Yorum:** {row['Yorum']}")
+
+                st.markdown("#### Tanım")
+                st.write(detail["tanım"])
+
+                st.markdown("#### Davranışsal Görünüm")
+                st.write(detail["davranışsal_görünüm"])
+
+                st.markdown("#### Katılımcı Yorumu")
+                st.write(row["Yorum"])
+
+                col_a, col_b = st.columns(2)
+
+                with col_a:
+                    st.markdown("#### Güçlü Taraflar")
+                    for item in detail["güçlü_taraflar"]:
+                        st.write(f"- {item}")
+
+                with col_b:
+                    st.markdown("#### Dikkat Edilmesi Gereken Riskler")
+                    for item in detail["riskler"]:
+                        st.write(f"- {item}")
+
+                st.markdown("#### Liderlik / Çalışma Yaşamı Açısından Değerlendirme")
+                st.write(detail["liderlik_yorumu"])
 
         st.divider()
 
