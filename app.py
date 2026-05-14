@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import html
-import random
 
 
 # -------------------------------------------------
@@ -61,6 +60,43 @@ SCALE_ITEMS = [
 ]
 
 
+# -------------------------------------------------
+# Sabit karışık sıra
+# Bu sıra tüm katılımcılarda aynı olur.
+# Başlık etkisini azaltır, araştırma standardizasyonunu korur.
+# -------------------------------------------------
+FIXED_SHUFFLED_ORDER = [
+    5,   # Belirsizlikten korkarım.
+    16,  # Amaçlarımı kendim belirlerim.
+    0,   # Keşfetmekten heyecan duyarım.
+    23,  # Acıma duygum vardır.
+    11,  # Mükemmeliyetçiyim.
+    8,   # Duygusal olduğumu düşünürüm.
+    20,  # Başkalarını olduğu gibi kabullenirim.
+    2,   # Savurganım.
+    26,  # Çevremdeki insanları bir parçam olarak görürüm.
+    14,  # Sebat ederim.
+    4,   # Endişeli ve karamsar olduğumu düşünürüm.
+    18,  # Kendimi olduğum gibi kabullenirim.
+    9,   # Kolay bağlanırım.
+    21,  # Empati kurarım.
+    1,   # Hızlı karar veririm.
+    12,  # Amacıma ulaşmak için sınırları zorlarım.
+    7,   # Çabuk yorulurum.
+    24,  # Temiz kalpli ve vicdanlıyım.
+    19,  # Değişikliklere kolay adapte olurum.
+    10,  # Başka insanlara bağımlı bir yapım vardır.
+    3,   # Düzensiz olduğumu düşünürüm.
+    15,  # Sorumluluk alırım.
+    6,   # Yabancılardan çekinirim.
+    22,  # Yardım severim.
+    25,  # Yaptığım işe kendimi kaptırırım.
+    13,  # Kolay vazgeçmem.
+    17,  # Becerikli olduğumu düşünürüm.
+    27   # Hayatta manevi bir gücün yarattığı mükemmel bir düzen olduğuna inanırım.
+]
+
+
 DIMENSION_ORDER = [
     "Yenilik Arayışı",
     "Zarardan Kaçınma",
@@ -109,14 +145,6 @@ DIMENSION_DESCRIPTIONS = {
         "Yüksek": "Kendi kendini aşma yüksek düzeydedir. Katılımcı yaptığı işe kendini kaptırabilen, çevresiyle bütünlük hissedebilen ve manevi anlam arayışı güçlü bir yapı gösterebilir."
     }
 }
-
-
-# -------------------------------------------------
-# Session state
-# -------------------------------------------------
-if "shuffled_items" not in st.session_state:
-    st.session_state.shuffled_items = SCALE_ITEMS.copy()
-    random.shuffle(st.session_state.shuffled_items)
 
 
 # -------------------------------------------------
@@ -191,7 +219,13 @@ def format_dimension_list(items):
     return ", ".join(items)
 
 
-def create_html_report(name, surname, df):
+def safe_file_name(text):
+    cleaned = text.strip().replace(" ", "_")
+    cleaned = "".join(char for char in cleaned if char.isalnum() or char in ["_", "-"])
+    return cleaned if cleaned else "katilimci"
+
+
+def create_html_report(participant_code, name, surname, df):
     full_name = f"{name} {surname}".strip()
     date_str = datetime.now().strftime("%d.%m.%Y %H:%M")
     profile = create_profile_summary(df)
@@ -207,6 +241,8 @@ def create_html_report(name, surname, df):
             <td>{html.escape(str(row['Yorum']))}</td>
         </tr>
         """
+
+    participant_name_html = html.escape(full_name) if full_name else "Belirtilmedi"
 
     report = f"""
     <!DOCTYPE html>
@@ -268,14 +304,15 @@ def create_html_report(name, surname, df):
         <h1>Mizaç ve Karakter Özellikleri Değerlendirme Raporu</h1>
 
         <div class="info-box">
-            <p><strong>Katılımcı:</strong> {html.escape(full_name)}</p>
+            <p><strong>Katılımcı Kodu:</strong> {html.escape(participant_code)}</p>
+            <p><strong>Katılımcı Adı Soyadı:</strong> {participant_name_html}</p>
             <p><strong>Rapor Tarihi:</strong> {date_str}</p>
         </div>
 
         <h2>Değerlendirme Yöntemi</h2>
         <p>
             Bu değerlendirmede her “Evet” yanıtı 1 puan, her “Hayır” yanıtı 0 puan olarak kabul edilmiştir.
-            Ölçek maddeleri katılımcıya karışık sırada ve alt boyut başlıkları gösterilmeden sunulmuştur.
+            Ölçek maddeleri katılımcıya sabit karışık sırada ve alt boyut başlıkları gösterilmeden sunulmuştur.
             Her madde arka planda ait olduğu alt boyuta göre puanlanmıştır.
         </p>
 
@@ -293,10 +330,10 @@ def create_html_report(name, surname, df):
 
         <h2>Profil Özeti</h2>
         <div class="summary-box">
-            <p><strong>En belirgin boyut:</strong> {html.escape(str(profile["highest_dimension"]["Alt Boyut"]))} 
+            <p><strong>En belirgin boyut:</strong> {html.escape(str(profile["highest_dimension"]["Alt Boyut"]))}
             (%{profile["highest_dimension"]["Yüzde Puanı"]})</p>
 
-            <p><strong>En düşük boyut:</strong> {html.escape(str(profile["lowest_dimension"]["Alt Boyut"]))} 
+            <p><strong>En düşük boyut:</strong> {html.escape(str(profile["lowest_dimension"]["Alt Boyut"]))}
             (%{profile["lowest_dimension"]["Yüzde Puanı"]})</p>
 
             <p><strong>Yüksek düzeydeki boyut sayısı:</strong> {profile["high_count"]}</p>
@@ -336,20 +373,24 @@ def create_html_report(name, surname, df):
     return report
 
 
-def create_text_report(name, surname, df):
+def create_text_report(participant_code, name, surname, df):
     full_name = f"{name} {surname}".strip()
+    if not full_name:
+        full_name = "Belirtilmedi"
+
     date_str = datetime.now().strftime("%d.%m.%Y %H:%M")
     profile = create_profile_summary(df)
 
     report = f"""
 MİZAÇ VE KARAKTER ÖZELLİKLERİ DEĞERLENDİRME RAPORU
 
-Katılımcı: {full_name}
+Katılımcı Kodu: {participant_code}
+Katılımcı Adı Soyadı: {full_name}
 Rapor Tarihi: {date_str}
 
 DEĞERLENDİRME YÖNTEMİ
 Her “Evet” yanıtı 1 puan, her “Hayır” yanıtı 0 puan olarak kodlanmıştır.
-Ölçek maddeleri katılımcıya karışık sırada ve alt boyut başlıkları gösterilmeden sunulmuştur.
+Ölçek maddeleri katılımcıya sabit karışık sırada ve alt boyut başlıkları gösterilmeden sunulmuştur.
 Her madde arka planda ait olduğu alt boyuta göre puanlanmıştır.
 Her alt boyuta ait maddeler toplanarak ham puan elde edilmiştir.
 Madde sayıları farklı olduğu için ham puanlar yüzdelik puana dönüştürülmüştür.
@@ -402,14 +443,14 @@ st.markdown("""
 Bu uygulama, katılımcının mizaç ve karakter özelliklerini kısa form üzerinden değerlendirmek için hazırlanmıştır.
 
 Lütfen aşağıdaki maddeleri dikkatle okuyunuz ve size en uygun gelen seçeneği işaretleyiniz.  
-Maddeler karışık sırada sunulmaktadır. Değerlendirme sonunda kişisel bir rapor oluşturulacaktır.
+Maddeler sabit karışık sırada sunulmaktadır. Değerlendirme sonunda kişisel bir rapor oluşturulacaktır.
 """)
 
 with st.expander("ℹ️ Puanlama hakkında bilgi"):
     st.markdown("""
     - **Evet = 1 puan**
     - **Hayır = 0 puan**
-    - Maddeler katılımcıya karışık sırada gösterilir.
+    - Maddeler katılımcıya sabit karışık sırada gösterilir.
     - Alt boyut başlıkları form ekranında gösterilmez.
     - Her madde arka planda ait olduğu alt boyuta göre puanlanır.
     - Sonuçlar yüzde puana dönüştürülür.
@@ -423,17 +464,54 @@ st.divider()
 
 
 # -------------------------------------------------
+# Onam bölümü
+# -------------------------------------------------
+st.subheader("I. Bilgilendirme ve Onam")
+
+st.info(
+    "Bu form araştırma ve betimleyici değerlendirme amacıyla hazırlanmıştır. "
+    "Elde edilen sonuçlar klinik tanı koyma amacı taşımaz. "
+    "Lütfen maddeleri içtenlikle yanıtlayınız. Doğru ya da yanlış cevap yoktur."
+)
+
+consent = st.checkbox(
+    "Bilgilendirme metnini okudum, anladım ve bu değerlendirmeye katılmayı kabul ediyorum."
+)
+
+
+if not consent:
+    st.warning("Forma devam edebilmek için bilgilendirme ve onam kutusunu işaretlemeniz gerekmektedir.")
+    st.stop()
+
+
+st.divider()
+
+
+# -------------------------------------------------
 # Katılımcı bilgileri
 # -------------------------------------------------
-st.subheader("I. Katılımcı Bilgileri")
+st.subheader("II. Katılımcı Bilgileri")
+
+participant_code = st.text_input(
+    "Katılımcı Kodu *",
+    placeholder="Örn. K001, P023, ANK-045"
+)
 
 col1, col2 = st.columns(2)
 
 with col1:
-    name = st.text_input("Adınız", placeholder="Örn. Ayşe")
+    name = st.text_input(
+        "Adınız",
+        placeholder="Örn. Ayşe",
+        help="İsteğe bağlıdır. Anonim kullanım için boş bırakılabilir."
+    )
 
 with col2:
-    surname = st.text_input("Soyadınız", placeholder="Örn. Yılmaz")
+    surname = st.text_input(
+        "Soyadınız",
+        placeholder="Örn. Yılmaz",
+        help="İsteğe bağlıdır. Anonim kullanım için boş bırakılabilir."
+    )
 
 
 st.divider()
@@ -442,13 +520,13 @@ st.divider()
 # -------------------------------------------------
 # Form
 # -------------------------------------------------
-st.subheader("II. Değerlendirme Maddeleri")
+st.subheader("III. Değerlendirme Maddeleri")
 
 answers = {}
 
 with st.form("personality_form"):
-    for display_number, scale_item in enumerate(st.session_state.shuffled_items, start=1):
-        original_index = SCALE_ITEMS.index(scale_item)
+    for display_number, original_index in enumerate(FIXED_SHUFFLED_ORDER, start=1):
+        scale_item = SCALE_ITEMS[original_index]
 
         response = st.radio(
             label=f"{display_number}. {scale_item['item']}",
@@ -472,8 +550,8 @@ with st.form("personality_form"):
 # Sonuçlar
 # -------------------------------------------------
 if submitted:
-    if not name.strip() or not surname.strip():
-        st.error("Lütfen katılımcının adını ve soyadını giriniz.")
+    if not participant_code.strip():
+        st.error("Lütfen katılımcı kodunu giriniz.")
 
     elif any(value is None for value in answers.values()):
         st.error("Lütfen tüm maddeleri işaretleyiniz. Boş madde bırakılmamalıdır.")
@@ -489,8 +567,12 @@ if submitted:
 
         st.success("Değerlendirme başarıyla tamamlandı.")
 
-        full_name = f"{name.strip()} {surname.strip()}"
-        st.subheader(f"📌 {full_name} için Değerlendirme Sonuçları")
+        full_name = f"{name.strip()} {surname.strip()}".strip()
+        display_identity = participant_code.strip()
+        if full_name:
+            display_identity += f" - {full_name}"
+
+        st.subheader(f"📌 {display_identity} için Değerlendirme Sonuçları")
 
         st.info(
             "Bu değerlendirmede toplam puan hesaplanmamaktadır. "
@@ -557,8 +639,23 @@ if submitted:
 
         st.markdown("### 📄 Rapor Oluştur")
 
-        html_report = create_html_report(name.strip(), surname.strip(), result_df)
-        text_report = create_text_report(name.strip(), surname.strip(), result_df)
+        participant_code_clean = participant_code.strip()
+        file_base = safe_file_name(participant_code_clean)
+
+        html_report = create_html_report(
+            participant_code_clean,
+            name.strip(),
+            surname.strip(),
+            result_df
+        )
+
+        text_report = create_text_report(
+            participant_code_clean,
+            name.strip(),
+            surname.strip(),
+            result_df
+        )
+
         csv_data = result_df.to_csv(index=False).encode("utf-8-sig")
 
         col1, col2, col3 = st.columns(3)
@@ -567,7 +664,7 @@ if submitted:
             st.download_button(
                 label="HTML Raporu İndir",
                 data=html_report,
-                file_name=f"{name.strip()}_{surname.strip()}_mizac_karakter_raporu.html",
+                file_name=f"{file_base}_mizac_karakter_raporu.html",
                 mime="text/html"
             )
 
@@ -575,7 +672,7 @@ if submitted:
             st.download_button(
                 label="Metin Raporu İndir",
                 data=text_report,
-                file_name=f"{name.strip()}_{surname.strip()}_mizac_karakter_raporu.txt",
+                file_name=f"{file_base}_mizac_karakter_raporu.txt",
                 mime="text/plain"
             )
 
@@ -583,7 +680,7 @@ if submitted:
             st.download_button(
                 label="Sonuçları CSV İndir",
                 data=csv_data,
-                file_name=f"{name.strip()}_{surname.strip()}_mizac_karakter_sonuclari.csv",
+                file_name=f"{file_base}_mizac_karakter_sonuclari.csv",
                 mime="text/csv"
             )
 
