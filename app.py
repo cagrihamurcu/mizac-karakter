@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import html
+import random
 
 
 # -------------------------------------------------
@@ -16,51 +17,140 @@ st.set_page_config(
 
 # -------------------------------------------------
 # Ölçek maddeleri
+# Katılımcıya alt boyut başlıkları gösterilmez.
+# Alt boyut bilgisi yalnızca puanlama için arka planda kullanılır.
 # -------------------------------------------------
-SCALE_ITEMS = {
-    "Yenilik Arayışı": [
-        "Keşfetmekten heyecan duyarım.",
-        "Hızlı karar veririm.",
-        "Savurganım.",
-        "Düzensiz olduğumu düşünürüm."
-    ],
-    "Zarardan Kaçınma": [
-        "Endişeli ve karamsar olduğumu düşünürüm.",
-        "Belirsizlikten korkarım.",
-        "Yabancılardan çekinirim.",
-        "Çabuk yorulurum."
-    ],
-    "Ödül Bağımlılığı": [
-        "Duygusal olduğumu düşünürüm.",
-        "Kolay bağlanırım.",
-        "Başka insanlara bağımlı bir yapım vardır."
-    ],
-    "Sebat Etme": [
-        "Mükemmeliyetçiyim.",
-        "Amacıma ulaşmak için sınırları zorlarım.",
-        "Kolay vazgeçmem.",
-        "Sebat ederim."
-    ],
-    "Kendi Kendini Yönetme": [
-        "Sorumluluk alırım.",
-        "Amaçlarımı kendim belirlerim.",
-        "Becerikli olduğumu düşünürüm.",
-        "Kendimi olduğum gibi kabullenirim.",
-        "Değişikliklere kolay adapte olurum."
-    ],
-    "İşbirliği Yapma": [
-        "Başkalarını olduğu gibi kabullenirim.",
-        "Empati kurarım.",
-        "Yardım severim.",
-        "Acıma duygum vardır.",
-        "Temiz kalpli ve vicdanlıyım."
-    ],
-    "Kendi Kendini Aşma": [
-        "Yaptığım işe kendimi kaptırırım.",
-        "Çevremdeki insanları bir parçam olarak görürüm.",
-        "Hayatta manevi bir gücün yarattığı mükemmel bir düzen olduğuna inanırım."
-    ]
-}
+SCALE_ITEMS = [
+    {
+        "dimension": "Yenilik Arayışı",
+        "item": "Keşfetmekten heyecan duyarım."
+    },
+    {
+        "dimension": "Yenilik Arayışı",
+        "item": "Hızlı karar veririm."
+    },
+    {
+        "dimension": "Yenilik Arayışı",
+        "item": "Savurganım."
+    },
+    {
+        "dimension": "Yenilik Arayışı",
+        "item": "Düzensiz olduğumu düşünürüm."
+    },
+
+    {
+        "dimension": "Zarardan Kaçınma",
+        "item": "Endişeli ve karamsar olduğumu düşünürüm."
+    },
+    {
+        "dimension": "Zarardan Kaçınma",
+        "item": "Belirsizlikten korkarım."
+    },
+    {
+        "dimension": "Zarardan Kaçınma",
+        "item": "Yabancılardan çekinirim."
+    },
+    {
+        "dimension": "Zarardan Kaçınma",
+        "item": "Çabuk yorulurum."
+    },
+
+    {
+        "dimension": "Ödül Bağımlılığı",
+        "item": "Duygusal olduğumu düşünürüm."
+    },
+    {
+        "dimension": "Ödül Bağımlılığı",
+        "item": "Kolay bağlanırım."
+    },
+    {
+        "dimension": "Ödül Bağımlılığı",
+        "item": "Başka insanlara bağımlı bir yapım vardır."
+    },
+
+    {
+        "dimension": "Sebat Etme",
+        "item": "Mükemmeliyetçiyim."
+    },
+    {
+        "dimension": "Sebat Etme",
+        "item": "Amacıma ulaşmak için sınırları zorlarım."
+    },
+    {
+        "dimension": "Sebat Etme",
+        "item": "Kolay vazgeçmem."
+    },
+    {
+        "dimension": "Sebat Etme",
+        "item": "Sebat ederim."
+    },
+
+    {
+        "dimension": "Kendi Kendini Yönetme",
+        "item": "Sorumluluk alırım."
+    },
+    {
+        "dimension": "Kendi Kendini Yönetme",
+        "item": "Amaçlarımı kendim belirlerim."
+    },
+    {
+        "dimension": "Kendi Kendini Yönetme",
+        "item": "Becerikli olduğumu düşünürüm."
+    },
+    {
+        "dimension": "Kendi Kendini Yönetme",
+        "item": "Kendimi olduğum gibi kabullenirim."
+    },
+    {
+        "dimension": "Kendi Kendini Yönetme",
+        "item": "Değişikliklere kolay adapte olurum."
+    },
+
+    {
+        "dimension": "İşbirliği Yapma",
+        "item": "Başkalarını olduğu gibi kabullenirim."
+    },
+    {
+        "dimension": "İşbirliği Yapma",
+        "item": "Empati kurarım."
+    },
+    {
+        "dimension": "İşbirliği Yapma",
+        "item": "Yardım severim."
+    },
+    {
+        "dimension": "İşbirliği Yapma",
+        "item": "Acıma duygum vardır."
+    },
+    {
+        "dimension": "İşbirliği Yapma",
+        "item": "Temiz kalpli ve vicdanlıyım."
+    },
+
+    {
+        "dimension": "Kendi Kendini Aşma",
+        "item": "Yaptığım işe kendimi kaptırırım."
+    },
+    {
+        "dimension": "Kendi Kendini Aşma",
+        "item": "Çevremdeki insanları bir parçam olarak görürüm."
+    },
+    {
+        "dimension": "Kendi Kendini Aşma",
+        "item": "Hayatta manevi bir gücün yarattığı mükemmel bir düzen olduğuna inanırım."
+    }
+]
+
+
+DIMENSION_ORDER = [
+    "Yenilik Arayışı",
+    "Zarardan Kaçınma",
+    "Ödül Bağımlılığı",
+    "Sebat Etme",
+    "Kendi Kendini Yönetme",
+    "İşbirliği Yapma",
+    "Kendi Kendini Aşma"
+]
 
 
 DIMENSION_DESCRIPTIONS = {
@@ -72,6 +162,14 @@ DIMENSION_DESCRIPTIONS = {
     "İşbirliği Yapma": "Yüksek puan; empati, yardımseverlik, vicdanlılık, başkalarını kabullenme ve sosyal uyum eğilimini gösterir.",
     "Kendi Kendini Aşma": "Yüksek puan; kişinin kendini yaptığı işe kaptırması, çevresiyle bütünlük hissetmesi ve manevi anlam arayışıyla ilişkilidir."
 }
+
+
+# -------------------------------------------------
+# Session state
+# -------------------------------------------------
+if "shuffled_items" not in st.session_state:
+    st.session_state.shuffled_items = SCALE_ITEMS.copy()
+    random.shuffle(st.session_state.shuffled_items)
 
 
 # -------------------------------------------------
@@ -88,9 +186,19 @@ def classify_score(percent):
 def create_results(answers):
     results = []
 
-    for dimension, items in SCALE_ITEMS.items():
-        raw_score = sum(answers.get(f"{dimension}_{i}", 0) for i in range(len(items)))
-        max_score = len(items)
+    for dimension in DIMENSION_ORDER:
+        dimension_items = [
+            item for item in SCALE_ITEMS
+            if item["dimension"] == dimension
+        ]
+
+        raw_score = 0
+
+        for original_index, scale_item in enumerate(SCALE_ITEMS):
+            if scale_item["dimension"] == dimension:
+                raw_score += answers.get(original_index, 0)
+
+        max_score = len(dimension_items)
         percent_score = round((raw_score / max_score) * 100, 2)
         level = classify_score(percent_score)
 
@@ -183,11 +291,13 @@ def create_html_report(name, surname, df):
         <h2>Değerlendirme Yöntemi</h2>
         <p>
             Bu değerlendirmede her “Evet” yanıtı 1 puan, her “Hayır” yanıtı 0 puan olarak kabul edilmiştir.
-            Her alt boyuta ait maddeler toplanmış ve ilgili alt boyutun ham puanı elde edilmiştir.
-            Alt boyutlarda madde sayıları farklı olduğu için puanlar yüzdelik değere dönüştürülmüştür.
+            Ölçek maddeleri katılımcıya karışık sırada ve alt boyut başlıkları gösterilmeden sunulmuştur.
+            Her madde arka planda ait olduğu alt boyuta göre puanlanmıştır.
         </p>
 
         <p>
+            Her alt boyuta ait maddeler toplanmış ve ilgili alt boyutun ham puanı elde edilmiştir.
+            Alt boyutlarda madde sayıları farklı olduğu için puanlar yüzdelik değere dönüştürülmüştür.
             Yüzde puanları 0–33 arası düşük, 34–66 arası orta, 67–100 arası yüksek düzey olarak yorumlanmıştır.
         </p>
 
@@ -231,6 +341,8 @@ Rapor Tarihi: {date_str}
 
 DEĞERLENDİRME YÖNTEMİ
 Her “Evet” yanıtı 1 puan, her “Hayır” yanıtı 0 puan olarak kodlanmıştır.
+Ölçek maddeleri katılımcıya karışık sırada ve alt boyut başlıkları gösterilmeden sunulmuştur.
+Her madde arka planda ait olduğu alt boyuta göre puanlanmıştır.
 Her alt boyuta ait maddeler toplanarak ham puan elde edilmiştir.
 Madde sayıları farklı olduğu için ham puanlar yüzdelik puana dönüştürülmüştür.
 0–33 düşük, 34–66 orta, 67–100 yüksek düzey olarak yorumlanmıştır.
@@ -263,15 +375,19 @@ Bilimsel çalışmalarda kullanılması durumunda ölçeğin geçerlik ve güven
 st.title("🧠 Mizaç ve Karakter Özellikleri Değerlendirme Formu")
 
 st.markdown("""
-Bu uygulama, katılımcının mizaç ve karakter özelliklerini kısa form üzerinden değerlendirmek için hazırlanmıştır.  
-Lütfen tüm maddeleri yanıtlayınız. Değerlendirme sonunda kişisel bir rapor oluşturulacaktır.
+Bu uygulama, katılımcının mizaç ve karakter özelliklerini kısa form üzerinden değerlendirmek için hazırlanmıştır.
+
+Lütfen aşağıdaki maddeleri dikkatle okuyunuz ve size en uygun gelen seçeneği işaretleyiniz.  
+Maddeler karışık sırada sunulmaktadır. Değerlendirme sonunda kişisel bir rapor oluşturulacaktır.
 """)
 
 with st.expander("ℹ️ Puanlama hakkında bilgi"):
     st.markdown("""
     - **Evet = 1 puan**
     - **Hayır = 0 puan**
-    - Her alt boyut kendi içinde toplanır.
+    - Maddeler katılımcıya karışık sırada gösterilir.
+    - Alt boyut başlıkları form ekranında gösterilmez.
+    - Her madde arka planda ait olduğu alt boyuta göre puanlanır.
     - Sonuçlar yüzde puana dönüştürülür.
     - **0–33:** Düşük  
     - **34–66:** Orta  
@@ -301,35 +417,28 @@ st.divider()
 # -------------------------------------------------
 # Form
 # -------------------------------------------------
-st.subheader("II. Katılımcının Mizaç ve Karakter Özellikleri")
+st.subheader("II. Değerlendirme Maddeleri")
 
 answers = {}
 
 with st.form("personality_form"):
-    item_number = 1
+    for display_number, scale_item in enumerate(st.session_state.shuffled_items, start=1):
+        original_index = SCALE_ITEMS.index(scale_item)
 
-    for dimension, items in SCALE_ITEMS.items():
-        st.markdown(f"### {dimension}")
+        response = st.radio(
+            label=f"{display_number}. {scale_item['item']}",
+            options=["Seçiniz", "Evet", "Hayır"],
+            index=0,
+            horizontal=True,
+            key=f"item_{original_index}"
+        )
 
-        for i, item in enumerate(items):
-            response = st.radio(
-                label=f"{item_number}. {item}",
-                options=["Seçiniz", "Evet", "Hayır"],
-                index=0,
-                horizontal=True,
-                key=f"{dimension}_{i}_radio"
-            )
-
-            if response == "Evet":
-                answers[f"{dimension}_{i}"] = 1
-            elif response == "Hayır":
-                answers[f"{dimension}_{i}"] = 0
-            else:
-                answers[f"{dimension}_{i}"] = None
-
-            item_number += 1
-
-        st.markdown("---")
+        if response == "Evet":
+            answers[original_index] = 1
+        elif response == "Hayır":
+            answers[original_index] = 0
+        else:
+            answers[original_index] = None
 
     submitted = st.form_submit_button("📊 Değerlendirmeyi Tamamla")
 
