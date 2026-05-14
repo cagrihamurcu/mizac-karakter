@@ -21,120 +21,39 @@ st.set_page_config(
 # Alt boyut bilgisi yalnızca puanlama için arka planda kullanılır.
 # -------------------------------------------------
 SCALE_ITEMS = [
-    {
-        "dimension": "Yenilik Arayışı",
-        "item": "Keşfetmekten heyecan duyarım."
-    },
-    {
-        "dimension": "Yenilik Arayışı",
-        "item": "Hızlı karar veririm."
-    },
-    {
-        "dimension": "Yenilik Arayışı",
-        "item": "Savurganım."
-    },
-    {
-        "dimension": "Yenilik Arayışı",
-        "item": "Düzensiz olduğumu düşünürüm."
-    },
+    {"dimension": "Yenilik Arayışı", "item": "Keşfetmekten heyecan duyarım."},
+    {"dimension": "Yenilik Arayışı", "item": "Hızlı karar veririm."},
+    {"dimension": "Yenilik Arayışı", "item": "Savurganım."},
+    {"dimension": "Yenilik Arayışı", "item": "Düzensiz olduğumu düşünürüm."},
 
-    {
-        "dimension": "Zarardan Kaçınma",
-        "item": "Endişeli ve karamsar olduğumu düşünürüm."
-    },
-    {
-        "dimension": "Zarardan Kaçınma",
-        "item": "Belirsizlikten korkarım."
-    },
-    {
-        "dimension": "Zarardan Kaçınma",
-        "item": "Yabancılardan çekinirim."
-    },
-    {
-        "dimension": "Zarardan Kaçınma",
-        "item": "Çabuk yorulurum."
-    },
+    {"dimension": "Zarardan Kaçınma", "item": "Endişeli ve karamsar olduğumu düşünürüm."},
+    {"dimension": "Zarardan Kaçınma", "item": "Belirsizlikten korkarım."},
+    {"dimension": "Zarardan Kaçınma", "item": "Yabancılardan çekinirim."},
+    {"dimension": "Zarardan Kaçınma", "item": "Çabuk yorulurum."},
 
-    {
-        "dimension": "Ödül Bağımlılığı",
-        "item": "Duygusal olduğumu düşünürüm."
-    },
-    {
-        "dimension": "Ödül Bağımlılığı",
-        "item": "Kolay bağlanırım."
-    },
-    {
-        "dimension": "Ödül Bağımlılığı",
-        "item": "Başka insanlara bağımlı bir yapım vardır."
-    },
+    {"dimension": "Ödül Bağımlılığı", "item": "Duygusal olduğumu düşünürüm."},
+    {"dimension": "Ödül Bağımlılığı", "item": "Kolay bağlanırım."},
+    {"dimension": "Ödül Bağımlılığı", "item": "Başka insanlara bağımlı bir yapım vardır."},
 
-    {
-        "dimension": "Sebat Etme",
-        "item": "Mükemmeliyetçiyim."
-    },
-    {
-        "dimension": "Sebat Etme",
-        "item": "Amacıma ulaşmak için sınırları zorlarım."
-    },
-    {
-        "dimension": "Sebat Etme",
-        "item": "Kolay vazgeçmem."
-    },
-    {
-        "dimension": "Sebat Etme",
-        "item": "Sebat ederim."
-    },
+    {"dimension": "Sebat Etme", "item": "Mükemmeliyetçiyim."},
+    {"dimension": "Sebat Etme", "item": "Amacıma ulaşmak için sınırları zorlarım."},
+    {"dimension": "Sebat Etme", "item": "Kolay vazgeçmem."},
+    {"dimension": "Sebat Etme", "item": "Sebat ederim."},
 
-    {
-        "dimension": "Kendi Kendini Yönetme",
-        "item": "Sorumluluk alırım."
-    },
-    {
-        "dimension": "Kendi Kendini Yönetme",
-        "item": "Amaçlarımı kendim belirlerim."
-    },
-    {
-        "dimension": "Kendi Kendini Yönetme",
-        "item": "Becerikli olduğumu düşünürüm."
-    },
-    {
-        "dimension": "Kendi Kendini Yönetme",
-        "item": "Kendimi olduğum gibi kabullenirim."
-    },
-    {
-        "dimension": "Kendi Kendini Yönetme",
-        "item": "Değişikliklere kolay adapte olurum."
-    },
+    {"dimension": "Kendi Kendini Yönetme", "item": "Sorumluluk alırım."},
+    {"dimension": "Kendi Kendini Yönetme", "item": "Amaçlarımı kendim belirlerim."},
+    {"dimension": "Kendi Kendini Yönetme", "item": "Becerikli olduğumu düşünürüm."},
+    {"dimension": "Kendi Kendini Yönetme", "item": "Kendimi olduğum gibi kabullenirim."},
+    {"dimension": "Kendi Kendini Yönetme", "item": "Değişikliklere kolay adapte olurum."},
 
-    {
-        "dimension": "İşbirliği Yapma",
-        "item": "Başkalarını olduğu gibi kabullenirim."
-    },
-    {
-        "dimension": "İşbirliği Yapma",
-        "item": "Empati kurarım."
-    },
-    {
-        "dimension": "İşbirliği Yapma",
-        "item": "Yardım severim."
-    },
-    {
-        "dimension": "İşbirliği Yapma",
-        "item": "Acıma duygum vardır."
-    },
-    {
-        "dimension": "İşbirliği Yapma",
-        "item": "Temiz kalpli ve vicdanlıyım."
-    },
+    {"dimension": "İşbirliği Yapma", "item": "Başkalarını olduğu gibi kabullenirim."},
+    {"dimension": "İşbirliği Yapma", "item": "Empati kurarım."},
+    {"dimension": "İşbirliği Yapma", "item": "Yardım severim."},
+    {"dimension": "İşbirliği Yapma", "item": "Acıma duygum vardır."},
+    {"dimension": "İşbirliği Yapma", "item": "Temiz kalpli ve vicdanlıyım."},
 
-    {
-        "dimension": "Kendi Kendini Aşma",
-        "item": "Yaptığım işe kendimi kaptırırım."
-    },
-    {
-        "dimension": "Kendi Kendini Aşma",
-        "item": "Çevremdeki insanları bir parçam olarak görürüm."
-    },
+    {"dimension": "Kendi Kendini Aşma", "item": "Yaptığım işe kendimi kaptırırım."},
+    {"dimension": "Kendi Kendini Aşma", "item": "Çevremdeki insanları bir parçam olarak görürüm."},
     {
         "dimension": "Kendi Kendini Aşma",
         "item": "Hayatta manevi bir gücün yarattığı mükemmel bir düzen olduğuna inanırım."
@@ -154,13 +73,41 @@ DIMENSION_ORDER = [
 
 
 DIMENSION_DESCRIPTIONS = {
-    "Yenilik Arayışı": "Yüksek puan; keşfetmeye açıklık, yenilikten heyecan duyma, hızlı karar verme ve hareketlilik eğilimini gösterir.",
-    "Zarardan Kaçınma": "Yüksek puan; kaygı, temkinlilik, belirsizlikten rahatsız olma, çekingenlik ve kolay yorulma eğilimine işaret eder.",
-    "Ödül Bağımlılığı": "Yüksek puan; duygusallık, sosyal bağlara önem verme ve başkalarından etkilenme eğilimini gösterir.",
-    "Sebat Etme": "Yüksek puan; kararlılık, hedefe bağlılık, kolay vazgeçmeme ve çabayı sürdürme eğilimini gösterir.",
-    "Kendi Kendini Yönetme": "Yüksek puan; sorumluluk alma, amaç belirleme, kendini kabul etme, beceriklilik ve uyum sağlama düzeyinin yüksek olduğunu gösterir.",
-    "İşbirliği Yapma": "Yüksek puan; empati, yardımseverlik, vicdanlılık, başkalarını kabullenme ve sosyal uyum eğilimini gösterir.",
-    "Kendi Kendini Aşma": "Yüksek puan; kişinin kendini yaptığı işe kaptırması, çevresiyle bütünlük hissetmesi ve manevi anlam arayışıyla ilişkilidir."
+    "Yenilik Arayışı": {
+        "Düşük": "Yenilik arayışı düşük düzeydedir. Katılımcı daha temkinli, düzenli ve alışılmış yöntemleri tercih eden bir yapı gösterebilir.",
+        "Orta": "Yenilik arayışı orta düzeydedir. Katılımcı yeni deneyimlere zaman zaman açık olmakla birlikte, kararlarında denge ve ölçülülük gösterebilir.",
+        "Yüksek": "Yenilik arayışı yüksek düzeydedir. Katılımcı keşfetmeye açık, yenilikten heyecan duyan, hızlı karar verebilen ve hareketli bir yapı gösterebilir."
+    },
+    "Zarardan Kaçınma": {
+        "Düşük": "Zarardan kaçınma düşük düzeydedir. Katılımcı belirsizlikler karşısında daha rahat, cesur ve risk almaya daha açık olabilir.",
+        "Orta": "Zarardan kaçınma orta düzeydedir. Katılımcı bazı durumlarda temkinli davranırken, bazı durumlarda daha rahat ve esnek olabilir.",
+        "Yüksek": "Zarardan kaçınma yüksek düzeydedir. Katılımcı kaygılı, temkinli, belirsizlikten rahatsız olan, çekingen ve kolay yorulan bir yapı gösterebilir."
+    },
+    "Ödül Bağımlılığı": {
+        "Düşük": "Ödül bağımlılığı düşük düzeydedir. Katılımcı ilişkilerinde daha bağımsız, duygusal etkilenmeye daha kapalı ve kendi kararlarını önceleyen bir yapı gösterebilir.",
+        "Orta": "Ödül bağımlılığı orta düzeydedir. Katılımcı sosyal bağlara önem vermekle birlikte, ilişkilerinde görece dengeli ve bağımsız davranabilir.",
+        "Yüksek": "Ödül bağımlılığı yüksek düzeydedir. Katılımcı duygusal, sosyal bağlara önem veren, kolay bağlanan ve başkalarından etkilenmeye açık bir yapı gösterebilir."
+    },
+    "Sebat Etme": {
+        "Düşük": "Sebat etme düşük düzeydedir. Katılımcı zorlayıcı hedefler karşısında daha çabuk vazgeçebilir veya çabasını sürdürmekte zorlanabilir.",
+        "Orta": "Sebat etme orta düzeydedir. Katılımcı hedefleri doğrultusunda çaba gösterebilir; ancak koşullara göre motivasyonu değişebilir.",
+        "Yüksek": "Sebat etme yüksek düzeydedir. Katılımcı kararlı, hedefe bağlı, kolay vazgeçmeyen ve çabasını sürdüren bir yapı gösterebilir."
+    },
+    "Kendi Kendini Yönetme": {
+        "Düşük": "Kendi kendini yönetme düşük düzeydedir. Katılımcı sorumluluk alma, amaç belirleme, kendini kabul etme veya uyum sağlama alanlarında zorlanabilir.",
+        "Orta": "Kendi kendini yönetme orta düzeydedir. Katılımcı sorumluluk alma ve amaç belirleme konusunda genel olarak yeterli olmakla birlikte bazı alanlarda desteğe ihtiyaç duyabilir.",
+        "Yüksek": "Kendi kendini yönetme yüksek düzeydedir. Katılımcı sorumluluk alan, amaçlarını belirleyebilen, kendini kabul eden, becerikli ve uyum sağlayabilen bir yapı gösterebilir."
+    },
+    "İşbirliği Yapma": {
+        "Düşük": "İşbirliği yapma düşük düzeydedir. Katılımcı sosyal ilişkilerde daha mesafeli, bireysel hareket eden veya başkalarının ihtiyaçlarına karşı daha sınırlı duyarlılık gösteren bir yapı sergileyebilir.",
+        "Orta": "İşbirliği yapma orta düzeydedir. Katılımcı sosyal ilişkilerde genel olarak uyumlu olmakla birlikte, bazı durumlarda bireysel sınırlarını daha fazla koruyabilir.",
+        "Yüksek": "İşbirliği yapma yüksek düzeydedir. Katılımcı empatik, yardımsever, vicdanlı, başkalarını kabullenen ve sosyal uyuma önem veren bir yapı gösterebilir."
+    },
+    "Kendi Kendini Aşma": {
+        "Düşük": "Kendi kendini aşma düşük düzeydedir. Katılımcı daha somut, gerçekçi ve bireysel sınırları belirgin bir anlam dünyasına sahip olabilir.",
+        "Orta": "Kendi kendini aşma orta düzeydedir. Katılımcı zaman zaman manevi, bütüncül veya anlam odaklı düşünceler geliştirebilir.",
+        "Yüksek": "Kendi kendini aşma yüksek düzeydedir. Katılımcı yaptığı işe kendini kaptırabilen, çevresiyle bütünlük hissedebilen ve manevi anlam arayışı güçlü bir yapı gösterebilir."
+    }
 }
 
 
@@ -208,7 +155,7 @@ def create_results(answers):
             "Maksimum Puan": max_score,
             "Yüzde Puanı": percent_score,
             "Düzey": level,
-            "Yorum": DIMENSION_DESCRIPTIONS[dimension]
+            "Yorum": DIMENSION_DESCRIPTIONS[dimension][level]
         })
 
     return pd.DataFrame(results)
@@ -466,7 +413,6 @@ if submitted:
         full_name = f"{name.strip()} {surname.strip()}"
         st.subheader(f"📌 {full_name} için Değerlendirme Sonuçları")
 
-        # Özet metrikler
         average_score = round(result_df["Yüzde Puanı"].mean(), 2)
         highest_dimension = result_df.sort_values("Yüzde Puanı", ascending=False).iloc[0]
         lowest_dimension = result_df.sort_values("Yüzde Puanı", ascending=True).iloc[0]
@@ -492,8 +438,8 @@ if submitted:
 
         st.divider()
 
-        # Tablo
         st.markdown("### Sonuç Tablosu")
+
         display_df = result_df[[
             "Alt Boyut",
             "Ham Puan",
@@ -504,12 +450,10 @@ if submitted:
 
         st.dataframe(display_df, use_container_width=True)
 
-        # Grafik
         st.markdown("### Grafiksel Gösterim")
         chart_df = result_df.set_index("Alt Boyut")["Yüzde Puanı"]
         st.bar_chart(chart_df)
 
-        # Ayrıntılı yorumlar
         st.markdown("### Alt Boyut Yorumları")
 
         for _, row in result_df.iterrows():
@@ -520,7 +464,6 @@ if submitted:
 
         st.divider()
 
-        # Rapor indirme
         st.markdown("### 📄 Rapor Oluştur")
 
         html_report = create_html_report(name.strip(), surname.strip(), result_df)
